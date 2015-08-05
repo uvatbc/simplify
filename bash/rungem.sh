@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Usage: rungem.sh <gem to run>
+# License: Creative Commons 1.0 Universal. See "CC1.0Universal" under the licenses directory.
 
 GEM_INSTALL_LOCATION=/var/lib/gems/2.1.0/gems/
 FINALPATH="$PATH"
