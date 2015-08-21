@@ -1,4 +1,5 @@
 #!/bin/bash
+# License: Creative Commons 1.0 Universal. See "CC1.0Universal" under the licenses directory.
 
 # This script expects to find the extracted JDK in the directory $HOME/bin/java.
 # It will look at the names of the top level directories that match the pattern
