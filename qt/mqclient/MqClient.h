@@ -1,0 +1,95 @@
+#ifndef _MQCLIENT_H_
+#define _MQCLIENT_H_
+
+#include "mosquittopp.h"
+#include "global.h"
+
+class MqClient : public QObject, public mosqpp::mosquittopp
+{
+    Q_OBJECT
+
+public:
+    explicit MqClient(QObject *parent = NULL,
+                      const char *id = NULL,
+                      bool clean_session = true);
+    ~MqClient();
+
+    void setupClient(const QString &topic,
+                     const QString &host,
+                     const int port = 1883,
+                     const int keepalive = 60);
+
+public slots:
+    void startWork();
+    void stopWork();
+signals:
+    void dataMessage(QByteArray msg);
+    void smCompleted(void);
+
+// State machine work functions
+private slots:
+    void reinitMq(void);
+    void reinitConnection(void);
+    void doLimbo(void);
+    void doSubscribe(void);
+    void doDisconnect(void);
+    void doWorkLoop(void);
+
+// State machine transitions
+signals:
+    void beginConnect(void);
+    void connectSuccess(void);
+    void connectFailure(void);
+    void subscribeSuccess(void);
+    void disconnectDone(void);
+    void sigStopWork(void);
+
+// Internal signals
+signals:
+    void sigConnect(int rc);
+    void sigDisconnect(int rc);
+    void sigPublish(int mid);
+    void sigMessage(const struct mosquitto_message *message);
+    void sigSubscribe(int mid, int qos_count, const int *granted_qos);
+    void sigUnsubscribe(int mid);
+    void sigLog(int level, const char *str);
+    void sigError();
+
+// Callbacks from mosqpp::mosquittopp
+protected:
+    virtual void on_connect(int rc);
+    virtual void on_disconnect(int rc);
+    virtual void on_publish(int mid);
+    virtual void on_message(const struct mosquitto_message *msg);
+    virtual void on_subscribe(int mid, int qos_count, const int *granted_qos);
+    virtual void on_unsubscribe(int mid);
+    virtual void on_log(int level, const char *str);
+    virtual void on_error();
+
+protected:
+    bool recreateSm(void);
+
+// For the notifiers:
+private slots:
+    void deleteNotifiers(void);
+    void onReadActivated(int s);
+    void onExceptActivated(int s);
+
+protected:
+    QSocketNotifier *m_readNotifier;
+    QSocketNotifier *m_exceptNotifier;
+
+    QString         m_host;
+    int             m_port;
+    QString         m_topic;
+    int             m_keepalive;
+
+    QStateMachine  *m_sm;
+
+    quint32         m_workLimboPeriod;
+    quint32         m_eventsInLoop;
+
+    bool            m_quitSet;
+};
+
+#endif//_MQCLIENT_H_

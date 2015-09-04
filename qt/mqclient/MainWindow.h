@@ -2,6 +2,7 @@
 #define _MAINWINDOW_H_
 
 #include "global.h"
+#include "MqClient.h"
 
 class MainWindow : public QObject
 {
@@ -12,8 +13,10 @@ public:
 
 private slots:
     void doInit(void);
+    void onMqUserInfoReceived(QByteArray msg);
 
 private:
+    MqClient *m_mqClient;
 };
 
 #endif //_MAINWINDOW_H_

@@ -10,6 +10,10 @@ PRECOMPILED_HEADER = global.h
 
 # Input
 HEADERS  += global.h        \
-            MainWindow.h
+            MainWindow.h    \
+            MqClient.h
 SOURCES  += main.cpp        \
-            MainWindow.cpp
+            MainWindow.cpp  \
+            MqClient.cpp
+
+LIBS += -lmosquittopp
