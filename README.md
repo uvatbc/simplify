@@ -10,7 +10,7 @@ The applicable will either be embedded into the script code or be in the COPYING
 
 # Shell scripts
 ## rungem.sh
-Running an installed ruby gem requires playing with the PATH. A scimple script would be so much simpler.
+Running an installed ruby gem requires playing with the PATH. A script would be so much simpler.
 
 ## setup_libnpjp_links.sh
 When I update java, I do it by downloading the JDK tar.gz from the Sun/Oracle website and extracting it in the ~/bin directory.
