@@ -1,0 +1,7 @@
+*swp
+
+# mqclient cruft:
+qt/mqclient/Makefile
+qt/mqclient/mqclient
+qt/mqclient/moc/*
+qt/mqclient/obj/*
