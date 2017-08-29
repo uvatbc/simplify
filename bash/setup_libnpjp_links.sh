@@ -7,6 +7,8 @@
 # The script then uses this directory as the base for the path to the libnpjp2.so
 # It will create links in the browser plugin directories for chrome and firefox
 
+set -x
+
 pushd $HOME/bin/java
 JRE=`find . | grep '^./jdk.*x64$' | sed -s 's/\.\///'`
 JREPATH=`pwd`/$JRE
